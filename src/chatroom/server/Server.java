@@ -38,7 +38,7 @@ class Server extends Thread {
     }
 
     public void broadcastMessage(String message) {
-        for(Socket client : connectedClients) {
+        for (Socket client : connectedClients) {
             try {
                 OutputStream outputStream = client.getOutputStream();
                 DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
@@ -53,9 +53,9 @@ class Server extends Thread {
     public void run() {
         super.run();
 
-        while(true) {
+        while (true) {
             String message = receiveMessage();
-            if(Thread.currentThread().isInterrupted()) {
+            if (Thread.currentThread().isInterrupted()) {
                 break;
             }
             broadcastMessage(message);
@@ -64,10 +64,10 @@ class Server extends Thread {
 
     public static void main(String[] args) {
         final int PORT = 5050;
-        try(ServerSocket serverSocket = new ServerSocket(PORT)) {
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Server started on port " + PORT);
 
-            while(true) {
+            while (true) {
                 Socket socket = serverSocket.accept();
                 connectedClients.add(socket);
                 Server serverInstance = new Server(socket);
